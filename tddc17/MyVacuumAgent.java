@@ -76,10 +76,6 @@ class MyAgentState
 	    return world[agent_x_position][agent_y_position];
     }
 
-    public Boolean is_home(){
-	    return world[agent_x_position][agent_y_position] == HOME;
-    }
-
     public void update_direction(Action act){
         switch (agent_direction) {
             case NORTH:
@@ -286,6 +282,73 @@ class MyAgentProgram implements AgentProgram {
         }
         return null;
     }
+    
+    //if already cleaned, cleanFlag=='Y', else, cleanFlag=='N' 
+    //map size is in width and hight. for example, width==10, height==5
+    private static int count;
+    private static int MAP;
+    private static int width;
+    private static int height;
+    private static char cleanFlag;
+    private Action perceptCleaned() {
+			for (int j=0; j < state.world[1].length ; j++)
+				if(state.world[1][j] == state.WALL)count++;
+			if(count==20)MAP=2020;
+			if(count==15)MAP=1515;
+			if(count==10) {
+				for(int j=0; j < state.world[1].length; j++) {
+					if(state.world[10][j] != state.WALL) {
+						MAP=510;
+						break;
+					}
+					MAP=1010;
+				}
+			}
+			if(count==5) {
+				for(int j=0; j < state.world[5].length; j++)
+					if(state.world[5][j]!=state.WALL) {
+						MAP = 105;
+						break;
+					}
+				MAP = 55;
+			}
+			if(MAP==2020) {
+				height = 20;
+				width = 20;
+			}
+			if(MAP==1515) {
+				height = 15;
+				width = 15;
+			}
+			if(MAP==510) {
+				height = 5;
+				width = 10;
+			}
+			if(MAP==1010) {
+				height = 10;
+				width = 10;
+			}
+			if(MAP==105) {
+				height =10;
+				width = 5;
+			}
+			if(MAP==55) {
+				height = 5;
+				width = 5;
+			}
+			int i;
+			for(i = 1; i<=height; ++i) {
+				for(int j = 1; j<=width; ++j) {
+					if(state.world[i][j]==state.DIRT) {
+						cleanFlag='N';
+						break;
+					}cleanFlag = 'Y';
+				}
+			}
+    }
+
+    
+    
 
 	@Override
 	public Action execute(Percept percept) {
@@ -322,11 +385,7 @@ class MyAgentProgram implements AgentProgram {
         // ------------------------------------
         int last_cell_info = state.get_curr_info();
 	    state.updatePosition((DynamicPercept)percept);
-        if(state.is_home()){
-            //return NoOpAction.NO_OP;
-        }
         int curr_info = state.get_curr_info();
-
 
 	    if (bump) {
             draw_wall();
@@ -350,17 +409,15 @@ class MyAgentProgram implements AgentProgram {
 	    	state.agent_last_action=state.ACTION_SUCK;
             act = LIUVacuumEnvironment.ACTION_SUCK;
 	    } else {
-            //System.out.println("last cell " + last_cell_info + " curr : "+ curr_info);
             // last cell was already cleared and new one too
+            //System.out.println("last cell " + last_cell_info + " curr : "+ curr_info);
             if(curr_info == state.CLEAR && last_cell_info == state.CLEAR){
                 if(bump == false){
                     redundant_clean++;
                 }
-                if(redundant_clean > 2){
-                    System.out.println("Hit threshold, try to found new way");
-                    // look around and find UNKNOW cell
+                if(redundant_clean > 5){
+                    // look around and find UNKNOW cell, act != null if a we can visit a unknow cell
                     act = act_to_unknow_cell();
-                    // act != null mean we can visit an unknow cell
                     if(act != null){
                         redundant_clean = 0;
                     }
@@ -375,6 +432,7 @@ class MyAgentProgram implements AgentProgram {
                 act = get_direction_corner();
                 if(act == null){
                     int x = random_generator.nextInt();
+                    // bump with wall near us, do not take this direction
                     if(x % 2 == 0){
                         act = LIUVacuumEnvironment.ACTION_TURN_LEFT;
                     } else {
