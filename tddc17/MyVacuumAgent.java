@@ -135,12 +135,12 @@ class MyAgentProgram implements AgentProgram {
 
 	private int initnialRandomActions = 10;
 	private Random random_generator = new Random();
-	
+
 	// Here you can define your variables!
-	public int iterationCounter = 10;
+	public int iterationCounter = 15*15*2;
 	public MyAgentState state = new MyAgentState();
 	private int redundant_clean = 0;
-	
+
 	// moves the Agent to a random start position
 	// uses percepts to update the Agent position - only the position, other percepts are ignored
 	// returns a random action
@@ -150,7 +150,7 @@ class MyAgentProgram implements AgentProgram {
 		state.updatePosition(percept);
 		if(action==0) {
 		    state.agent_direction = ((state.agent_direction-1) % 4);
-		    if (state.agent_direction<0) 
+		    if (state.agent_direction<0)
 		    	state.agent_direction +=4;
 		    state.agent_last_action = state.ACTION_TURN_LEFT;
 			return LIUVacuumEnvironment.ACTION_TURN_LEFT;
@@ -158,7 +158,7 @@ class MyAgentProgram implements AgentProgram {
 			state.agent_direction = ((state.agent_direction+1) % 4);
 		    state.agent_last_action = state.ACTION_TURN_RIGHT;
 		    return LIUVacuumEnvironment.ACTION_TURN_RIGHT;
-		} 
+		}
 		state.agent_last_action=state.ACTION_MOVE_FORWARD;
 		return LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
 	}
@@ -232,58 +232,180 @@ class MyAgentProgram implements AgentProgram {
         return null;
     }
 
-    // return action needed to get a new unknow cell direction
-    private Action act_to_unknow_cell(){
+    // first search of unknown cell
+    private Action act_to_unknow_cell_1(){
         int x = state.agent_x_position;
         int y = state.agent_y_position;
+        Action act = null;
         Action left = LIUVacuumEnvironment.ACTION_TURN_LEFT;
         Action right = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
+        Action forward = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
         switch (state.agent_direction) {
             case MyAgentState.NORTH:
+                // front ?
+                if(state.world[x][y-1] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
                 // left ?
                 if(state.world[x-1][y] == state.UNKNOWN){
-                    return left;
+                    act = left;
                 }
                 // right ?
                 if(state.world[x+1][y] == state.UNKNOWN){
-                    return right;
+                    act = right;
                 }
                 break;
             case MyAgentState.EAST:
+                // front ?
+                if(state.world[x+1][y] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
                 // top ?
                 if(state.world[x][y-1] == state.UNKNOWN){
-                    return left;
+                    act = left;
                 }
                 // bottom ?
                 if(state.world[x][y+1] == state.UNKNOWN){
-                    return right;
+                    act = right;
                 }
                 break;
             case MyAgentState.SOUTH:
+                // front ?
+                if(state.world[x][y+1] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
                 // right ?
                 if(state.world[x+1][y] == state.UNKNOWN){
-                    return left;
+                    act = left;
                 }
                 // left ?
                 if(state.world[x-1][y] == state.UNKNOWN){
-                    return right;
+                    act = right;
                 }
                 break;
             case MyAgentState.WEST:
+                // front ?
+                if(state.world[x-1][y] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
                 // top ?
                 if(state.world[x][y-1] == state.UNKNOWN){
-                    return right;
+                    act = right;
                 }
                 // bottom ?
                 if(state.world[x][y+1] == state.UNKNOWN){
-                    return left;
+                    act = left;
                 }
                 break;
         }
-        return null;
+        return act;
     }
-    
-    //if already cleaned, cleanFlag=='Y', else, cleanFlag=='N' 
+
+    // second search of unknown cell
+    private Action act_to_unknow_cell_2(){
+        int x = state.agent_x_position;
+        int y = state.agent_y_position;
+        Action act = null;
+        Action left = LIUVacuumEnvironment.ACTION_TURN_LEFT;
+        Action right = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
+        Action forward = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
+        switch (state.agent_direction) {
+            case MyAgentState.NORTH:
+                // front ?
+                if(state.world[x][y-1] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
+                // left ?
+                if(state.world[x-1][y] == state.UNKNOWN){
+                    act = left;
+                }
+                // right ?
+                if(state.world[x+1][y] == state.UNKNOWN){
+                    act = right;
+                }
+                break;
+            case MyAgentState.EAST:
+                // front ?
+                if(state.world[x+1][y] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
+                // top ?
+                if(state.world[x][y-1] == state.UNKNOWN){
+                    act = left;
+                }
+                // bottom ?
+                if(state.world[x][y+1] == state.UNKNOWN){
+                    act = right;
+                }
+                break;
+            case MyAgentState.SOUTH:
+                // front ?
+                if(state.world[x][y+1] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
+                // right ?
+                if(state.world[x+1][y] == state.UNKNOWN){
+                    act = left;
+                }
+                // left ?
+                if(state.world[x-1][y] == state.UNKNOWN){
+                    act = right;
+                }
+                break;
+            case MyAgentState.WEST:
+                // front ?
+                if(state.world[x-1][y] == state.UNKNOWN){
+                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
+                    act = forward;
+                }
+                // top ?
+                if(state.world[x][y-1] == state.UNKNOWN){
+                    act = right;
+                }
+                // bottom ?
+                if(state.world[x][y+1] == state.UNKNOWN){
+                    act = left;
+                }
+                break;
+        }
+        return act;
+    }
+
+    private Action act_to_unknow_cell(){
+        Action act = null;
+        // act_to_unknow_cell_1
+        // act != null means one of ? can be reach
+        // ?
+        // X ?
+        // ?
+        act = act_to_unknow_cell_1();
+        // second try
+        //? . ?
+        //  X .
+        //? . ?
+
+        // thrid try
+        //? ? ? ?
+        //. . . ?
+        //  X . ?
+        //. . . ?
+        //? ? ? ?
+
+        // then recursively increase size of search
+
+        // idea: if we are on north priorize cells on south ?
+        //       if we are on east --> west etc...
+        return act;
+    }
+
+    //if already cleaned, cleanFlag=='Y', else, cleanFlag=='N'
     //map size is in width and hight. for example, width==10, height==5
     private static int count;
     private static int MAP;
@@ -291,64 +413,63 @@ class MyAgentProgram implements AgentProgram {
     private static int height;
     private static char cleanFlag;
     private Action perceptCleaned() {
-			for (int j=0; j < state.world[1].length ; j++)
-				if(state.world[1][j] == state.WALL)count++;
-			if(count==20)MAP=2020;
-			if(count==15)MAP=1515;
-			if(count==10) {
-				for(int j=0; j < state.world[1].length; j++) {
-					if(state.world[10][j] != state.WALL) {
-						MAP=510;
-						break;
-					}
-					MAP=1010;
-				}
-			}
-			if(count==5) {
-				for(int j=0; j < state.world[5].length; j++)
-					if(state.world[5][j]!=state.WALL) {
-						MAP = 105;
-						break;
-					}
-				MAP = 55;
-			}
-			if(MAP==2020) {
-				height = 20;
-				width = 20;
-			}
-			if(MAP==1515) {
-				height = 15;
-				width = 15;
-			}
-			if(MAP==510) {
-				height = 5;
-				width = 10;
-			}
-			if(MAP==1010) {
-				height = 10;
-				width = 10;
-			}
-			if(MAP==105) {
-				height =10;
-				width = 5;
-			}
-			if(MAP==55) {
-				height = 5;
-				width = 5;
-			}
-			int i;
-			for(i = 1; i<=height; ++i) {
-				for(int j = 1; j<=width; ++j) {
-					if(state.world[i][j]==state.DIRT) {
-						cleanFlag='N';
-						break;
-					}cleanFlag = 'Y';
-				}
-			}
+        Action act = null;
+        for (int j=0; j < state.world[1].length ; j++)
+            if(state.world[1][j] == state.WALL)count++;
+        if(count==20)MAP=2020;
+        if(count==15)MAP=1515;
+        if(count==10) {
+            for(int j=0; j < state.world[1].length; j++) {
+                if(state.world[10][j] != state.WALL) {
+                    MAP=510;
+                    break;
+                }
+                MAP=1010;
+            }
+        }
+        if(count==5) {
+            for(int j=0; j < state.world[5].length; j++)
+                if(state.world[5][j]!=state.WALL) {
+                    MAP = 105;
+                    break;
+                }
+            MAP = 55;
+        }
+        if(MAP==2020) {
+            height = 20;
+            width = 20;
+        }
+        if(MAP==1515) {
+            height = 15;
+            width = 15;
+        }
+        if(MAP==510) {
+            height = 5;
+            width = 10;
+        }
+        if(MAP==1010) {
+            height = 10;
+            width = 10;
+        }
+        if(MAP==105) {
+            height =10;
+            width = 5;
+        }
+        if(MAP==55) {
+            height = 5;
+            width = 5;
+        }
+        int i;
+        for(i = 1; i<=height; ++i) {
+            for(int j = 1; j<=width; ++j) {
+                if(state.world[i][j]==state.DIRT) {
+                    cleanFlag='N';
+                    break;
+                }cleanFlag = 'Y';
+            }
+        }
+        return act;
     }
-
-    
-    
 
 	@Override
 	public Action execute(Percept percept) {
@@ -363,16 +484,17 @@ class MyAgentProgram implements AgentProgram {
 			state.agent_last_action=state.ACTION_SUCK;
 	    	return LIUVacuumEnvironment.ACTION_SUCK;
     	}
-		
+
     	// This example agent program will update the internal agent state while only moving forward.
     	// START HERE - code below should be modified!
     	System.out.println("x=" + state.agent_x_position);
     	System.out.println("y=" + state.agent_y_position);
     	System.out.println("dir=" + state.agent_direction);
-    	
-	    //iterationCounter--;
-	    /*if (iterationCounter==0)
-	    	return NoOpAction.NO_OP;*/
+        System.out.println("cpt=" + iterationCounter);
+
+	    iterationCounter--;
+	    if (iterationCounter==0)
+	    	return NoOpAction.NO_OP;
 
 	    DynamicPercept p = (DynamicPercept) percept;
 	    Boolean bump = (Boolean)p.getAttribute("bump");

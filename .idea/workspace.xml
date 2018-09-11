@@ -22,14 +22,16 @@
       <file leaf-file-name="MyVacuumAgent.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="245" column="36" lean-forward="true" selection-start-line="245" selection-start-column="36" selection-end-line="245" selection-end-column="36" />
+            <state relative-caret-position="-1000">
+              <caret line="308" column="39" lean-forward="false" selection-start-line="308" selection-start-column="39" selection-end-line="308" selection-end-column="39" />
               <folding>
-                <element signature="method#update_direction#0;class#MyAgentState#0" expanded="false" />
-                <element signature="method#printWorldDebug#0;class#MyAgentState#0" expanded="false" />
                 <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
                 <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
                 <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
+                <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
+                <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
+                <element signature="e#19000#19001#0" expanded="true" />
+                <element signature="e#19037#19038#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -52,6 +54,10 @@
       <find>switch_direction</find>
       <find>HOME</find>
       <find>NO_OP</find>
+      <find>perceptCleaned</find>
+      <find>return</find>
+      <find>last_action</find>
+      <find>redundant_clean</find>
     </findStrings>
     <replaceStrings>
       <replace>x</replace>
@@ -59,6 +65,8 @@
       <replace>left</replace>
       <replace>right</replace>
       <replace>state.world</replace>
+      <replace>act =</replace>
+      <replace>uk_cpt</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -100,6 +108,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -143,7 +152,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -389,6 +397,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -400,7 +409,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38024357" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28612304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29041487" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -420,9 +429,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
@@ -430,11 +443,29 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="method#update_direction#0;class#MyAgentState#0" expanded="false" />
-            <element signature="method#printWorldDebug#0;class#MyAgentState#0" expanded="false" />
             <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="e#19000#19001#0" expanded="true" />
+            <element signature="e#19037#19038#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="e#19000#19001#0" expanded="true" />
+            <element signature="e#19037#19038#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -490,14 +521,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="245" column="36" lean-forward="true" selection-start-line="245" selection-start-column="36" selection-end-line="245" selection-end-column="36" />
+        <state relative-caret-position="-1000">
+          <caret line="308" column="39" lean-forward="false" selection-start-line="308" selection-start-column="39" selection-end-line="308" selection-end-column="39" />
           <folding>
-            <element signature="method#update_direction#0;class#MyAgentState#0" expanded="false" />
-            <element signature="method#printWorldDebug#0;class#MyAgentState#0" expanded="false" />
             <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="e#19000#19001#0" expanded="true" />
+            <element signature="e#19037#19038#0" expanded="true" />
           </folding>
         </state>
       </provider>
