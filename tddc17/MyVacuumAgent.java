@@ -323,150 +323,140 @@ class MyAgentProgram implements AgentProgram {
         Action left = LIUVacuumEnvironment.ACTION_TURN_LEFT;
         Action right = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
         Action forward = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
-        switch (state.agent_direction) {
-	            case MyAgentState.NORTH:
-	            if((state.world[x][y-1] != state.UNKNOWN) &&
+        switch (state.agent_direction){
+        case MyAgentState.NORTH:
+        	if((state.world[x][y-1] != state.UNKNOWN) &&
 	            	(state.world[x][y+1] != state.UNKNOWN) &&
 	            	(state.world[x-1][y] != state.UNKNOWN) &&
 	            	(state.world[x+1][y] != state.UNKNOWN)){
-	            	if(state.world[x-1][y-1] == UNKNOWN){
-	            		if(state.world[x][y-1] != WALL){
+	            	if(state.world[x-1][y-1] == state.UNKNOWN){
+	            		if(state.world[x][y-1] != state.WALL){
 	            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
 	            			act = forward;
-	            		}else if(state.world[x-1][y] != WALL){
-	            			state.agent_last_action = state.ACTION_TURN_LEFT;
+	            		}else if(state.world[x-1][y] != state.WALL){
 	            			act = left;
 	            		}	
-	            	}else if(state.world[x+1][y-1] == UNKNOWN){
-	            		if(state.world[x][y-1] != WALL){
+	            	}else if(state.world[x+1][y-1] == state.UNKNOWN){
+	            		if(state.world[x][y-1] != state.WALL){
 	            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
 	            			act = forward;
-	            		}else if(state.world[x+1][y] != WALL){
-	            			state.agent_last_action = state.ACTION_TURN_RIGHT;
+	            		}else if(state.world[x+1][y] != state.WALL){
 	            			act = right;
 	            		}
 	            	}else{
 	            		if(state.world[x][y-2] == state.UNKNOWN && state.world[x][y-1] != state.WALL){
 	            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
 	            			act = forward;
-	            		}else if (state.world[x-2][y] == state.UNKOWN && state.world[x-1][y] != state.WALL){
-	            			state.agent_last_action = state.ACTION_TURN_LEFT;
+	            		}else if(state.world[x-2][y] == state.UNKNOWN && state.world[x-1][y] != state.WALL){
 	            			act = left;
-	            		}else if (state.world[x+2][y] == state.unknown && state.world[x+1][y] != state.WALL){
-	            			state.agent_last_action = state.ACTION_TURN_RIGHT;
+	            		}else if(state.world[x+2][y] == state.UNKNOWN && state.world[x+1][y] != state.WALL){
 	            			act = right;
 	            		}
 	            	}
-               }
+        	}
                break;
-                case MyAgentState.EAST:
+               
+               case MyAgentState.EAST:
                 if((state.world[x][y-1] != state.UNKNOWN) &&
                 	(state.world[x][y+1] != state.UNKNOWN) &&
                 	(state.world[x-1][y] != state.UNKNOWN) &&
                 	(state.world[x+1][y] != state.UNKNOWN)){
-                	if(state.world[x+1][y-1] == UNKNOWN){
-                		if(state.world[x+1][y] != WALL){
+                	if(state.world[x+1][y-1] == state.UNKNOWN){
+                		if(state.world[x+1][y] != state.WALL){
                 			state.agent_last_action = state.ACTION_MOVE_FORWARD;
                 			act = forward;
-                		}else if(state.world[x][y-1] != WALL){
-                			state.agent_last_action = state.ACTION_TURN_LEFT;
+                		}else if(state.world[x][y-1] != state.WALL){
                 			act = left;
                 		}
-                	}else if(state.world[x+1][y+1] == UNKNOWN){
-                		if(state.world[x+1][y] != WALL){
+                	}else if(state.world[x+1][y+1] == state.UNKNOWN){
+                		if(state.world[x+1][y] != state.WALL){
                 			state.agent_last_action = state.ACTION_MOVE_FORWARD;
                 			act = forward;
-                		else if(state.world[x][y+1] != WALL){
-                			state.agent_last_action = state.ACTION_TURN_RIGHT;
+                		}else if(state.world[x][y+1] != state.WALL){
                 			act = right;
                 		}
                 	}else{
                 		if(state.world[x][y-2] == state.UNKNOWN && state.world[x][y-1] != state.WALL){
-                			state.agent_last_action = state.ACTION_TURN_LEFT;
                 			act = left;
-                		}else if (state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
-                			state.agent_last_action = state.ACTION_TURN_RIGHT;
+                		}else if(state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
                 			act = right;
-                		}else if (state.world[x+2][y] == state.unknown && state.world[x+1][y] != state.WALL){
+                		}else if(state.world[x+2][y] == state.UNKNOWN && state.world[x+1][y] != state.WALL){
                 			state.agent_last_action = state.ACTION_MOVE_FORWARD;
                 			act = forward;
                 		}
                 	}
                }
                break;
+               
                case MyAgentState.SOUTH:
                if((state.world[x][y-1] != state.UNKNOWN) &&
                	(state.world[x][y+1] != state.UNKNOWN) &&
                	(state.world[x-1][y] != state.UNKNOWN) &&
             	(state.world[x+1][y] != state.UNKNOWN)){
-            	if(state.world[x+1][y+1] == UNKNOWN){
-            		if(state.world[x][y+1] != WALL){
+            	if(state.world[x+1][y+1] == state.UNKNOWN){
+            		if(state.world[x][y+1] != state.WALL){
             			state.agent_last_action = state.ACTION_MOVE_FORWARD;
             			act = forward;
-            		}else if(state.world[x+1][y] != WALL){
-            			state.agent_last_action = state.ACTION_TURN_LEFT;
+            		}else if(state.world[x+1][y] != state.WALL){
             			act = left;
             		}
-            	}else if(state.world[x-1][y+1] == UNKNOWN){
-            		if(state.world[x][y+1] != WALL){
+            	}else if(state.world[x-1][y+1] == state.UNKNOWN){
+            		if(state.world[x][y+1] != state.WALL){
             			state.agent_last_action = state.ACTION_MOVE_FORWARD;
             			act = forward;
-            		}else if(state.world[x-1][y] != WALL){
-            			state.agent_last_action = state.ACTION_TURN_RIGHT;
+            		}else if(state.world[x-1][y] != state.WALL){
             			act = right;
             		}
             	}else{
             		if(state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
             			state.agent_last_action = state.ACTION_MOVE_FORWARD;
             			act = forward;
-            		}else if (state.world[x-2][y] == state.UNKNOWN && state.world[x-1][y] != state.WALL){
-            			state.agent_last_action = state.ACTION_TURN_RIGHT;
-            			act = right
-            		}else if (state.world[x+2][y] == state.unknown && state.world[x+1][y] != state.WALL){
-            			state.agent_last_action = state.ACTION_TURN_LEFT;
+            		}else if(state.world[x-2][y] == state.UNKNOWN && state.world[x-1][y] != state.WALL){
+            			act = right;
+            		}else if(state.world[x+2][y] == state.UNKNOWN && state.world[x+1][y] != state.WALL){
             			act = left;
-            		}
+            			}
             	}
-            }
-            break;
-            	case MyAgentState.WEST:
-            	if((state.world[x][y-1] != state.UNKNOWN) &&
+            	}
+               break;
+               
+               case MyAgentState.WEST:
+            	   if((state.world[x][y-1] != state.UNKNOWN) &&
             		(state.world[x][y+1] != state.UNKNOWN) &&
             		(state.world[x-1][y] != state.UNKNOWN) &&
             		(state.world[x+1][y] != state.UNKNOWN)){
-            		if(state.world[x-1][y-1] == UNKNOWN){
-            			if(state.world[x-1][y] != WALL){
+            		if(state.world[x-1][y-1] == state.UNKNOWN){
+            			if(state.world[x-1][y] != state.WALL){
             				state.agent_last_action = state.ACTION_MOVE_FORWARD;
             				act = forward;
-            			}else if(state.world[x][y-1] != WALL){
+            			}else if(state.world[x][y-1] != state.WALL){
             			state.agent_last_action = state.ACTION_TURN_RIGHT;
             			act = right;
-            		}
-            	}else if(state.world[x-1][y+1] == UNKNOWN){
-            		if(state.world[x-1][y] != WALL){
+            			}
+            		}else if(state.world[x-1][y+1] == state.UNKNOWN){
+            			if(state.world[x-1][y] != state.WALL){
             			state.agent_last_action = state.ACTION_MOVE_FORWARD;
             			act = forward;
-            		}else if(state.world[x][y+1] != WALL){
+            			}else if(state.world[x][y+1] != state.WALL){
             			state.agent_last_action = state.ACTION_TURN_LEFT;
             			act = left;
+            			}
             		}else{
-            		if(state.world[x][y-2] == state.UNKNOWN && state.world[x][y-1] != state.WALL){
-            			state.agent_last_action = state.ACTION_TURN_RIGHT;
-            			act = right;
-            		}else if (state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
-            			state.agent_last_action = state.ACTION_TURN_LEFT;
-            			act = left
-            		}else if (state.world[x-2][y] == state.unknown && state.world[x-1][y] != state.WALL){
-            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                    act = forward;
-                }
-               }
-           }
-                break;
+            			if(state.world[x][y-2] == state.UNKNOWN && state.world[x][y-1] != state.WALL){
+            				state.agent_last_action = state.ACTION_TURN_RIGHT;
+            				act = right;
+            				}else if(state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
+            					act = left;
+            					}else if(state.world[x-2][y] == state.UNKNOWN && state.world[x-1][y] != state.WALL){
+            						state.agent_last_action = state.ACTION_MOVE_FORWARD;
+            						act = forward;
+            					}
+            			}
+            	   }
+            	   break;
         }
         return act;
-        return null;
-    }
+        }
 
     private Action act_to_unknow_cell(){
         Action act = null;
@@ -480,7 +470,6 @@ class MyAgentProgram implements AgentProgram {
         //? . ?
         //  X .
         //? . ?
-
         // thrid try
         //? ? ? ?
         //. . . ?
