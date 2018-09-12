@@ -136,9 +136,22 @@ class MyAgentProgram implements AgentProgram {
 	private int initnialRandomActions = 10;
 	private Random random_generator = new Random();
 
+    private static final int ROAM = 0;
+    private static final int TRY_TAKE_N_DIR = 1;
+    private static final int TREND_NW = 2;
+    private int inner_state = ROAM;
+
 	// Here you can define your variables!
-	public int iterationCounter = 15*15*2;
-	public MyAgentState state = new MyAgentState();
+    private int iterationCounter = 15*15*2;
+    // used in TREND_NW if stuck
+    private final int iterationUnstuckStep = 5;
+    private int iterationUnstuck = 0;
+
+    // back home threshold
+    private final int bh_threshold = 150;
+
+    private MyAgentState state = new MyAgentState();
+    private final int redundant_clean_step = 3;
 	private int redundant_clean = 0;
 
 	// moves the Agent to a random start position
@@ -197,7 +210,6 @@ class MyAgentProgram implements AgentProgram {
                 if(state.world[x-1][y] == state.WALL){
                     return right;
                 }
-                break;
             case MyAgentState.EAST:
                 // top right corner, wall on north ?
                 if(state.world[x][y-1] == state.WALL){
@@ -207,7 +219,6 @@ class MyAgentProgram implements AgentProgram {
                 if(state.world[x][y+1] == state.WALL){
                     return left;
                 }
-                break;
             case MyAgentState.SOUTH:
                 // bottom right corner, wall on east ?
                 if(state.world[x+1][y] == state.WALL){
@@ -217,7 +228,6 @@ class MyAgentProgram implements AgentProgram {
                 if(state.world[x-1][y] == state.WALL){
                     return left;
                 }
-                break;
             case MyAgentState.WEST:
                 // top left corner, wall on north ?
                 if(state.world[x][y-1] == state.WALL){
@@ -227,7 +237,6 @@ class MyAgentProgram implements AgentProgram {
                 if(state.world[x][y+1] == state.WALL){
                     return right;
                 }
-                break;
         }
         return null;
     }
@@ -307,75 +316,8 @@ class MyAgentProgram implements AgentProgram {
 
     // second search of unknown cell
     private Action act_to_unknow_cell_2(){
-        int x = state.agent_x_position;
-        int y = state.agent_y_position;
-        Action act = null;
-        Action left = LIUVacuumEnvironment.ACTION_TURN_LEFT;
-        Action right = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
-        Action forward = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
-        switch (state.agent_direction) {
-            case MyAgentState.NORTH:
-                // front ?
-                if(state.world[x][y-1] == state.UNKNOWN){
-                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                    act = forward;
-                }
-                // left ?
-                if(state.world[x-1][y] == state.UNKNOWN){
-                    act = left;
-                }
-                // right ?
-                if(state.world[x+1][y] == state.UNKNOWN){
-                    act = right;
-                }
-                break;
-            case MyAgentState.EAST:
-                // front ?
-                if(state.world[x+1][y] == state.UNKNOWN){
-                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                    act = forward;
-                }
-                // top ?
-                if(state.world[x][y-1] == state.UNKNOWN){
-                    act = left;
-                }
-                // bottom ?
-                if(state.world[x][y+1] == state.UNKNOWN){
-                    act = right;
-                }
-                break;
-            case MyAgentState.SOUTH:
-                // front ?
-                if(state.world[x][y+1] == state.UNKNOWN){
-                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                    act = forward;
-                }
-                // right ?
-                if(state.world[x+1][y] == state.UNKNOWN){
-                    act = left;
-                }
-                // left ?
-                if(state.world[x-1][y] == state.UNKNOWN){
-                    act = right;
-                }
-                break;
-            case MyAgentState.WEST:
-                // front ?
-                if(state.world[x-1][y] == state.UNKNOWN){
-                    state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                    act = forward;
-                }
-                // top ?
-                if(state.world[x][y-1] == state.UNKNOWN){
-                    act = right;
-                }
-                // bottom ?
-                if(state.world[x][y+1] == state.UNKNOWN){
-                    act = left;
-                }
-                break;
-        }
-        return act;
+        // TODO ?
+        return null;
     }
 
     private Action act_to_unknow_cell(){
@@ -471,6 +413,57 @@ class MyAgentProgram implements AgentProgram {
         return act;
     }
 
+    private Boolean take_north_direciton_again = false;
+    private Action take_north_direction(){
+        int x = state.agent_x_position;
+        int y = state.agent_y_position;
+        Action left = LIUVacuumEnvironment.ACTION_TURN_LEFT;
+        Action right = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
+        switch (state.agent_direction) {
+            case MyAgentState.EAST:
+                return left;
+            case MyAgentState.SOUTH:
+                return right;
+            case MyAgentState.WEST:
+                take_north_direciton_again = true;
+                return right;
+        }
+        return null;
+    }
+
+    // find most closest known cell from home
+    private Action trend_nw(){
+        Action act = null;
+        if(state.agent_direction == MyAgentState.NORTH){
+            // go forward on north
+            if(state.agent_last_action == state.ACTION_NONE){
+                state.agent_last_action=state.ACTION_MOVE_FORWARD;
+                act = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
+            } else{
+                act = LIUVacuumEnvironment.ACTION_TURN_LEFT;
+            }
+        }
+        else if(state.agent_direction == MyAgentState.WEST){
+            // go forward on west
+            if(state.agent_last_action == state.ACTION_NONE){
+                state.agent_last_action=state.ACTION_MOVE_FORWARD;
+                act = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
+            } else{
+                act = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
+            }
+        }
+        return act;
+    }
+
+    // prerequise : TREND_NW
+    //                                              ___
+    // detect if we are stuck in a corner like this |
+    private Boolean stuck_corner(){
+        int x = state.agent_x_position;
+        int y = state.agent_y_position;
+        return state.world[x-1][y] == state.WALL && state.world[x][y-1] == state.WALL;
+    }
+
 	@Override
 	public Action execute(Percept percept) {
 		// DO NOT REMOVE this if condition!!!
@@ -493,8 +486,14 @@ class MyAgentProgram implements AgentProgram {
         System.out.println("cpt=" + iterationCounter);
 
 	    iterationCounter--;
-	    if (iterationCounter==0)
+	    if (iterationCounter==0){
 	    	return NoOpAction.NO_OP;
+        }
+
+	    if (iterationCounter == bh_threshold){
+            inner_state = TRY_TAKE_N_DIR;
+            System.out.println("State : TRY_TAKE_N_DIR");
+        }
 
 	    DynamicPercept p = (DynamicPercept) percept;
 	    Boolean bump = (Boolean)p.getAttribute("bump");
@@ -505,6 +504,10 @@ class MyAgentProgram implements AgentProgram {
         // ------------------------------------
         //  FROM PERCEPT & LAST ACTION
         // ------------------------------------
+        if(home && iterationCounter < bh_threshold){
+            return NoOpAction.NO_OP;
+        }
+
         int last_cell_info = state.get_curr_info();
 	    state.updatePosition((DynamicPercept)percept);
         int curr_info = state.get_curr_info();
@@ -531,40 +534,74 @@ class MyAgentProgram implements AgentProgram {
 	    	state.agent_last_action=state.ACTION_SUCK;
             act = LIUVacuumEnvironment.ACTION_SUCK;
 	    } else {
-            // last cell was already cleared and new one too
-            //System.out.println("last cell " + last_cell_info + " curr : "+ curr_info);
-            if(curr_info == state.CLEAR && last_cell_info == state.CLEAR){
-                if(bump == false){
-                    redundant_clean++;
-                }
-                if(redundant_clean > 5){
-                    // look around and find UNKNOW cell, act != null if a we can visit a unknow cell
-                    act = act_to_unknow_cell();
-                    if(act != null){
-                        redundant_clean = 0;
+	        if (inner_state == ROAM) {
+                // when state was TREND_NW and pacman is stuck in a corner, we roam again while iterationUnstuck > 0
+                if(iterationUnstuck-- > 0){
+                    if(iterationUnstuck == 0){
+                        inner_state = TRY_TAKE_N_DIR;
                     }
-                    //System.out.println("Switch !" + act);
                 }
-            } else {
-                redundant_clean = 0;
-            }
 
-	    	if (bump) {
-                // direction if a corner is reached
-                act = get_direction_corner();
-                if(act == null){
-                    int x = random_generator.nextInt();
-                    // bump with wall near us, do not take this direction
-                    if(x % 2 == 0){
-                        act = LIUVacuumEnvironment.ACTION_TURN_LEFT;
-                    } else {
+	            // roam and get away if we are on redundant cells
+                if(curr_info == state.CLEAR && last_cell_info == state.CLEAR){
+                    if(bump == false){
+                        redundant_clean++;
+                    }
+                    if(redundant_clean > redundant_clean_step){
+                        // look around and find UNKNOW cell, act != null if a we can visit a unknow cell
+                        act = act_to_unknow_cell();
+                        if(act != null){
+                            redundant_clean = 0;
+                        }
+                        //System.out.println("Switch !" + act);
+                    }
+                } else {
+                    redundant_clean = 0;
+                }
+                if (bump) {
+                    // direction if a corner is reached
+                    act = get_direction_corner();
+                    if(act == null){
+                        int x = random_generator.nextInt();
+                        // bump with wall near us, do not take this direction
+                        if(x % 2 == 0){
+                            act = LIUVacuumEnvironment.ACTION_TURN_LEFT;
+                        } else {
+                            act = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
+                        }
+                    }
+                } else if(act == null) {
+                    state.agent_last_action=state.ACTION_MOVE_FORWARD;
+                    act = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
+                }
+	        }
+            else if (inner_state == TRY_TAKE_N_DIR){
+	            // get north direction before TREND_NW state
+                if (state.agent_direction != MyAgentState.NORTH){
+                    act = take_north_direction();
+                } else {
+                    state.agent_last_action=state.ACTION_MOVE_FORWARD;
+                    act = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
+                }
+                if(state.agent_direction != MyAgentState.SOUTH){
+                    inner_state = TREND_NW;
+                }
+            }
+            else if(inner_state == TREND_NW){
+                //                                              ___
+                // detect if we are stuck in a corner like this |
+                if(stuck_corner() == false){
+                    act = trend_nw();
+                } else{
+                    inner_state = ROAM;
+                    iterationUnstuck = iterationUnstuckStep;
+                    if (state.agent_direction == MyAgentState.NORTH){
                         act = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
+                    } else {
+                        act = LIUVacuumEnvironment.ACTION_TURN_LEFT;
                     }
                 }
-	    	} else if(act == null) {
-	    		state.agent_last_action=state.ACTION_MOVE_FORWARD;
-                act = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
-	    	}
+            }
 	    }
         if (act == LIUVacuumEnvironment.ACTION_TURN_LEFT || act == LIUVacuumEnvironment.ACTION_TURN_RIGHT){
             state.agent_last_action = state.ACTION_NONE;
