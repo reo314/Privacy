@@ -21,17 +21,18 @@
       <file leaf-file-name="MyVacuumAgent.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1134">
-              <caret line="549" column="61" lean-forward="false" selection-start-line="549" selection-start-column="61" selection-end-line="549" selection-end-column="61" />
+            <state relative-caret-position="-489">
+              <caret line="146" column="22" lean-forward="false" selection-start-line="146" selection-start-column="22" selection-end-line="146" selection-end-column="22" />
               <folding>
                 <element signature="class#MyAgentState#0" expanded="false" />
                 <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
                 <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
                 <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
-                <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
-                <element signature="method#act_to_unknow_cell#0;class#MyAgentProgram#0" expanded="false" />
-                <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
-                <element signature="method#trend_nw#0;class#MyAgentProgram#0" expanded="false" />
+                <element signature="initializer##0;class#MyAgentProgram#0" expanded="false" />
+                <marker date="1536828120269" expanded="false" signature="10325:10806" ph="{...}" />
+                <marker date="1536828120269" expanded="false" signature="10883:11721" ph="{...}" />
+                <marker date="1536828120269" expanded="false" signature="18000:18008" ph=" { " />
+                <marker date="1536828120269" expanded="false" signature="18036:18039" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -62,6 +63,8 @@
       <find>bh_state</find>
       <find>agent_last_action</find>
       <find>iterationUnstuck</find>
+      <find>take_north_direciton_again</find>
+      <find>stuck_corner</find>
     </findStrings>
     <replaceStrings>
       <replace>x</replace>
@@ -113,6 +116,8 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -155,8 +160,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,7 +416,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38024357" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29470673" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3040057" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -434,7 +437,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -452,10 +455,11 @@
             <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#trend_nw#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="initializer##0;class#MyAgentProgram#0" expanded="false" />
+            <marker date="1536828120269" expanded="false" signature="10325:10806" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="10883:11721" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="18000:18008" ph=" { " />
+            <marker date="1536828120269" expanded="false" signature="18036:18039" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -469,10 +473,11 @@
             <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#trend_nw#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="initializer##0;class#MyAgentProgram#0" expanded="false" />
+            <marker date="1536828120269" expanded="false" signature="10325:10806" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="10883:11721" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="18000:18008" ph=" { " />
+            <marker date="1536828120269" expanded="false" signature="18036:18039" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -486,10 +491,47 @@
             <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#trend_nw#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="initializer##0;class#MyAgentProgram#0" expanded="false" />
+            <marker date="1536828120269" expanded="false" signature="10325:10806" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="10883:11721" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="18000:18008" ph=" { " />
+            <marker date="1536828120269" expanded="false" signature="18036:18039" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="class#MyAgentState#0" expanded="false" />
+            <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="initializer##0;class#MyAgentProgram#0" expanded="false" />
+            <marker date="1536828120269" expanded="false" signature="10325:10806" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="10883:11721" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="18000:18008" ph=" { " />
+            <marker date="1536828120269" expanded="false" signature="18036:18039" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="class#MyAgentState#0" expanded="false" />
+            <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="initializer##0;class#MyAgentProgram#0" expanded="false" />
+            <marker date="1536828120269" expanded="false" signature="10325:10806" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="10883:11721" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="18000:18008" ph=" { " />
+            <marker date="1536828120269" expanded="false" signature="18036:18039" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -545,17 +587,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tddc17/MyVacuumAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="549" column="61" lean-forward="false" selection-start-line="549" selection-start-column="61" selection-end-line="549" selection-end-column="61" />
+        <state relative-caret-position="-489">
+          <caret line="146" column="22" lean-forward="false" selection-start-line="146" selection-start-column="22" selection-end-line="146" selection-end-column="22" />
           <folding>
             <element signature="class#MyAgentState#0" expanded="false" />
             <element signature="method#moveToRandomStartPosition#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#draw_wall#0;class#MyAgentProgram#0" expanded="false" />
             <element signature="method#get_direction_corner#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell_1#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#act_to_unknow_cell#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#perceptCleaned#0;class#MyAgentProgram#0" expanded="false" />
-            <element signature="method#trend_nw#0;class#MyAgentProgram#0" expanded="false" />
+            <element signature="initializer##0;class#MyAgentProgram#0" expanded="false" />
+            <marker date="1536828120269" expanded="false" signature="10325:10806" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="10883:11721" ph="{...}" />
+            <marker date="1536828120269" expanded="false" signature="18000:18008" ph=" { " />
+            <marker date="1536828120269" expanded="false" signature="18036:18039" ph=" }" />
           </folding>
         </state>
       </provider>

@@ -148,7 +148,7 @@ class MyAgentProgram implements AgentProgram {
     private int iterationUnstuck = 0;
 
     // back home threshold
-    private final int bh_threshold = 150;
+    private final int bh_threshold = 120;
 
     private MyAgentState state = new MyAgentState();
     private final int redundant_clean_step = 3;
@@ -241,8 +241,8 @@ class MyAgentProgram implements AgentProgram {
         return null;
     }
 
-    // first search of unknown cell
-    private Action act_to_unknow_cell_1(){
+    // search near us an unknown cell
+    private Action act_to_unknow_cell_{
         int x = state.agent_x_position;
         int y = state.agent_y_position;
         Action act = null;
@@ -314,243 +314,6 @@ class MyAgentProgram implements AgentProgram {
         return act;
     }
 
-    // second search of unknown cell
-    private Action act_to_unknow_cell_2(){
-        // TODO ?
-	int x = state.agent_x_position;
-        int y = state.agent_y_position;
-        Action act = null;
-        Action left = LIUVacuumEnvironment.ACTION_TURN_LEFT;
-        Action right = LIUVacuumEnvironment.ACTION_TURN_RIGHT;
-        Action forward = LIUVacuumEnvironment.ACTION_MOVE_FORWARD;
-        switch (state.agent_direction){
-        case MyAgentState.NORTH:
-        	if((state.world[x][y-1] != state.UNKNOWN) &&
-	            	(state.world[x][y+1] != state.UNKNOWN) &&
-	            	(state.world[x-1][y] != state.UNKNOWN) &&
-	            	(state.world[x+1][y] != state.UNKNOWN)){
-	            	if(state.world[x-1][y-1] == state.UNKNOWN){
-	            		if(state.world[x][y-1] != state.WALL){
-	            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-	            			act = forward;
-	            		}else if(state.world[x-1][y] != state.WALL){
-	            			act = left;
-	            		}	
-	            	}else if(state.world[x+1][y-1] == state.UNKNOWN){
-	            		if(state.world[x][y-1] != state.WALL){
-	            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-	            			act = forward;
-	            		}else if(state.world[x+1][y] != state.WALL){
-	            			act = right;
-	            		}
-	            	}else{
-	            		if(state.world[x][y-2] == state.UNKNOWN && state.world[x][y-1] != state.WALL){
-	            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-	            			act = forward;
-	            		}else if(state.world[x-2][y] == state.UNKNOWN && state.world[x-1][y] != state.WALL){
-	            			act = left;
-	            		}else if(state.world[x+2][y] == state.UNKNOWN && state.world[x+1][y] != state.WALL){
-	            			act = right;
-	            		}
-	            	}
-        	}
-               break;
-               
-               case MyAgentState.EAST:
-                if((state.world[x][y-1] != state.UNKNOWN) &&
-                	(state.world[x][y+1] != state.UNKNOWN) &&
-                	(state.world[x-1][y] != state.UNKNOWN) &&
-                	(state.world[x+1][y] != state.UNKNOWN)){
-                	if(state.world[x+1][y-1] == state.UNKNOWN){
-                		if(state.world[x+1][y] != state.WALL){
-                			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                			act = forward;
-                		}else if(state.world[x][y-1] != state.WALL){
-                			act = left;
-                		}
-                	}else if(state.world[x+1][y+1] == state.UNKNOWN){
-                		if(state.world[x+1][y] != state.WALL){
-                			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                			act = forward;
-                		}else if(state.world[x][y+1] != state.WALL){
-                			act = right;
-                		}
-                	}else{
-                		if(state.world[x][y-2] == state.UNKNOWN && state.world[x][y-1] != state.WALL){
-                			act = left;
-                		}else if(state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
-                			act = right;
-                		}else if(state.world[x+2][y] == state.UNKNOWN && state.world[x+1][y] != state.WALL){
-                			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-                			act = forward;
-                		}
-                	}
-               }
-               break;
-               
-               case MyAgentState.SOUTH:
-               if((state.world[x][y-1] != state.UNKNOWN) &&
-               	(state.world[x][y+1] != state.UNKNOWN) &&
-               	(state.world[x-1][y] != state.UNKNOWN) &&
-            	(state.world[x+1][y] != state.UNKNOWN)){
-            	if(state.world[x+1][y+1] == state.UNKNOWN){
-            		if(state.world[x][y+1] != state.WALL){
-            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-            			act = forward;
-            		}else if(state.world[x+1][y] != state.WALL){
-            			act = left;
-            		}
-            	}else if(state.world[x-1][y+1] == state.UNKNOWN){
-            		if(state.world[x][y+1] != state.WALL){
-            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-            			act = forward;
-            		}else if(state.world[x-1][y] != state.WALL){
-            			act = right;
-            		}
-            	}else{
-            		if(state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
-            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-            			act = forward;
-            		}else if(state.world[x-2][y] == state.UNKNOWN && state.world[x-1][y] != state.WALL){
-            			act = right;
-            		}else if(state.world[x+2][y] == state.UNKNOWN && state.world[x+1][y] != state.WALL){
-            			act = left;
-            			}
-            	}
-            	}
-               break;
-               
-               case MyAgentState.WEST:
-            	   if((state.world[x][y-1] != state.UNKNOWN) &&
-            		(state.world[x][y+1] != state.UNKNOWN) &&
-            		(state.world[x-1][y] != state.UNKNOWN) &&
-            		(state.world[x+1][y] != state.UNKNOWN)){
-            		if(state.world[x-1][y-1] == state.UNKNOWN){
-            			if(state.world[x-1][y] != state.WALL){
-            				state.agent_last_action = state.ACTION_MOVE_FORWARD;
-            				act = forward;
-            			}else if(state.world[x][y-1] != state.WALL){
-            			state.agent_last_action = state.ACTION_TURN_RIGHT;
-            			act = right;
-            			}
-            		}else if(state.world[x-1][y+1] == state.UNKNOWN){
-            			if(state.world[x-1][y] != state.WALL){
-            			state.agent_last_action = state.ACTION_MOVE_FORWARD;
-            			act = forward;
-            			}else if(state.world[x][y+1] != state.WALL){
-            			state.agent_last_action = state.ACTION_TURN_LEFT;
-            			act = left;
-            			}
-            		}else{
-            			if(state.world[x][y-2] == state.UNKNOWN && state.world[x][y-1] != state.WALL){
-            				state.agent_last_action = state.ACTION_TURN_RIGHT;
-            				act = right;
-            				}else if(state.world[x][y+2] == state.UNKNOWN && state.world[x][y+1] != state.WALL){
-            					act = left;
-            					}else if(state.world[x-2][y] == state.UNKNOWN && state.world[x-1][y] != state.WALL){
-            						state.agent_last_action = state.ACTION_MOVE_FORWARD;
-            						act = forward;
-            					}
-            			}
-            	   }
-            	   break;
-        }
-        return act;
-        }
-
-    private Action act_to_unknow_cell(){
-        Action act = null;
-        // act_to_unknow_cell_1
-        // act != null means one of ? can be reach
-        // ?
-        // X ?
-        // ?
-        act = act_to_unknow_cell_1();
-        // second try
-        //? . ?
-        //  X .
-        //? . ?
-        // thrid try
-        //? ? ? ?
-        //. . . ?
-        //  X . ?
-        //. . . ?
-        //? ? ? ?
-
-        // then recursively increase size of search
-
-        // idea: if we are on north priorize cells on south ?
-        //       if we are on east --> west etc...
-        return act;
-    }
-
-    //if already cleaned, cleanFlag=='Y', else, cleanFlag=='N'
-    //map size is in width and hight. for example, width==10, height==5
-    private static int count;
-    private static int MAP;
-    private static int width;
-    private static int height;
-    private static char cleanFlag;
-    private Action perceptCleaned() {
-        Action act = null;
-        for (int j=0; j < state.world[1].length ; j++)
-            if(state.world[1][j] == state.WALL)count++;
-        if(count==20)MAP=2020;
-        if(count==15)MAP=1515;
-        if(count==10) {
-            for(int j=0; j < state.world[1].length; j++) {
-                if(state.world[10][j] != state.WALL) {
-                    MAP=510;
-                    break;
-                }
-                MAP=1010;
-            }
-        }
-        if(count==5) {
-            for(int j=0; j < state.world[5].length; j++)
-                if(state.world[5][j]!=state.WALL) {
-                    MAP = 105;
-                    break;
-                }
-            MAP = 55;
-        }
-        if(MAP==2020) {
-            height = 20;
-            width = 20;
-        }
-        if(MAP==1515) {
-            height = 15;
-            width = 15;
-        }
-        if(MAP==510) {
-            height = 5;
-            width = 10;
-        }
-        if(MAP==1010) {
-            height = 10;
-            width = 10;
-        }
-        if(MAP==105) {
-            height =10;
-            width = 5;
-        }
-        if(MAP==55) {
-            height = 5;
-            width = 5;
-        }
-        int i;
-        for(i = 1; i<=height; ++i) {
-            for(int j = 1; j<=width; ++j) {
-                if(state.world[i][j]==state.DIRT) {
-                    cleanFlag='N';
-                    break;
-                }cleanFlag = 'Y';
-            }
-        }
-        return act;
-    }
-
-    private Boolean take_north_direciton_again = false;
     private Action take_north_direction(){
         int x = state.agent_x_position;
         int y = state.agent_y_position;
@@ -562,7 +325,6 @@ class MyAgentProgram implements AgentProgram {
             case MyAgentState.SOUTH:
                 return right;
             case MyAgentState.WEST:
-                take_north_direciton_again = true;
                 return right;
         }
         return null;
